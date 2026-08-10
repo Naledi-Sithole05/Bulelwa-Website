@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #0e160a;
+ background-color: #eff0c7;
   padding: 0.8rem;
 }
 
@@ -34,13 +34,38 @@ header {
   justify-content: center;
   padding: 1rem;
   background-color: #153019;
+  perspective: 800px; /* enables 3D depth for children */
 }
 
 .Navigation .nav-links a {
   text-decoration: none;
   color: #efeab6;
   font-family: "Jost", sans-serif;
+  font-weight: bold;
+  display: inline-block; /* transforms need this to work reliably */
 }
+
+.Welcome-Page{
+   margin: 0.9rem 0;
+  padding: 1rem;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 2rem;
+  overflow: hidden;
+  background-color: #ffffe7;
+  display: flex;
+  align-items: center;
+
+}
+.Circle{
+ 
+  width: 100px;
+  height: 100px;
+  background-color: #3498db;
+  border-radius: 50%;
+}
+
+
 
 .Landing-Page {
   margin: 0.9rem 0;
@@ -49,7 +74,7 @@ header {
   aspect-ratio: 16 / 9;
   border-radius: 2rem;
   overflow: hidden;
-  background-color: #0e1f10;
+  background-color: #ffffe7;
   display: flex;
   align-items: center;
 }
@@ -79,7 +104,7 @@ header {
 .Home-Quote {
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin-top: 20rem;
 }
@@ -91,7 +116,7 @@ header {
   aspect-ratio: 16 / 9;
   border-radius: 2rem;
   overflow: hidden;
-  background-color: #0e1f10;
+ background-color: #ffffe7;
   display: flex;
   align-items: center;
 
@@ -107,7 +132,7 @@ header {
 .Her-Reason{
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin-top: 10rem;
 
@@ -116,7 +141,7 @@ header {
   font-family: "Jost", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin: 0;
   padding: 1rem;
@@ -141,7 +166,7 @@ header {
   aspect-ratio: 16 / 9;
   border-radius: 2rem;
   overflow: hidden;
- background-color: #0e1f10;
+ background-color: #ffffe7;
   display: flex;
   align-items: center;
 
@@ -171,7 +196,7 @@ header {
   font-size: 3rem;
   text-transform: uppercase;
   font-style: italic;      /* NEW: this is what actually makes it italic */
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin: 0;
   padding: 1rem;
@@ -179,7 +204,7 @@ header {
 .About-Mashezi{
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin-top: 10rem;
   margin-bottom: -10rem;
@@ -192,7 +217,7 @@ header {
   aspect-ratio: 16 / 9;
   border-radius: 2rem;
   overflow: hidden;
-  background-color: #0e1f10;
+  background-color: #ffffe7;
   display: flex;
   align-items: center;
 
@@ -221,7 +246,7 @@ header {
   font-family: "Jost", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin: 0;
   padding: 1rem;
@@ -229,7 +254,7 @@ header {
 .Keynote-Speaker-p{
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin-top: 10rem;
 
@@ -241,7 +266,7 @@ header {
   aspect-ratio: 16 / 9;
   border-radius: 2rem;
   overflow: hidden;
-  background-color: #0e1f10;
+  background-color: #ffffe7;
   display: flex;
   align-items: center;
 
@@ -263,7 +288,7 @@ header {
   font-family: "Jost", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin: 0;
   padding: 1rem;
@@ -271,7 +296,7 @@ header {
 .Shepard-Teacher-p{
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin-top: 10rem;
 
@@ -283,7 +308,7 @@ header {
   aspect-ratio: 16 / 9;
   border-radius: 2rem;
   overflow: hidden;
-  background-color: #0e1f10;
+  background-color: #ffffe7;
   display: flex;
   align-items: center;
 }
@@ -292,7 +317,7 @@ header {
   font-size: 3rem;
   text-transform: uppercase;
   font-style: italic;      /* NEW: this is what actually makes it italic */
-  color: #efeab6;
+  color: #36330e;
   text-align: center;
   margin: 0;
   padding: 1rem;
@@ -300,7 +325,7 @@ header {
 .Lessons-Lectures-p {
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
-  color: #efeab6;
+ color: #36330e;
   text-align: center;
   margin-top: 10rem;
 }

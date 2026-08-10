@@ -42,7 +42,40 @@
     });
 
     nav.appendChild(ul);
+
+    // Only attach hover effects once the links actually exist in the DOM
+    attachNavHoverEffects();
+  }
+
+  function attachNavHoverEffects() {
+    const navLinkElements = document.querySelectorAll('.nav-links a');
+
+    navLinkElements.forEach(link => {
+      link.style.transformOrigin = "center"; // makes sure it scales evenly, not lopsided
+
+    link.addEventListener('mouseenter', () => {
+  gsap.to(link, {
+    scale: 1.2,
+    z: 50,
+    rotationX: 5,
+    
+    color: "#fffffc",
+    duration: 0.3,
+    ease: "power2.out"
+  });
+});
+      link.addEventListener('mouseleave', () => {
+        gsap.to(link, {
+          scale: 1,
+          opacity: 1,
+          color: "#efeab6", // back to the original nav-link color from your CSS
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+    });
   }
 
   document.addEventListener('DOMContentLoaded', buildNav);
 })();
+ 
