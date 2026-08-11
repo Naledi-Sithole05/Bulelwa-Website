@@ -57,12 +57,50 @@ header {
   align-items: center;
 
 }
-.Circle{
- 
-  width: 100px;
-  height: 100px;
-  background-color: #3498db;
+.Welcome{
+   font-family: "Jost", sans-serif;
+  font-size: 10rem;
+  color: #36330e;
+  text-align: center;
+  margin-top: 2rem;
+  margin-left:25rem;
+
+
+}
+.Animation-Stage {
+  position: relative;
+  width: 700px;
+  height: 700px;
+  
+  margin: 0 auto;
+}
+
+.Circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background-color: #1c7f3a;
   border-radius: 50%;
+  opacity: 0;
+}
+
+.Tree-Video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  margin-top:6rem;
+  margin-left: 10rem;
+}
+
+.Tree-Video.playing {
+  opacity: 1;
 }
 
 
