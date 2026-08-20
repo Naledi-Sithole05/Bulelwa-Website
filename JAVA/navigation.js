@@ -6,12 +6,7 @@
     { href: '../HTML/About.html',    label: 'About' },
   ];
 
-  const homeNavLinks = [
-    { href: 'index.html',         label: 'Home' },
-    { href: 'HTML/Services.html', label: 'Services' },
-    { href: 'HTML/Contacts.html', label: 'Contact' },
-    { href: 'HTML/About.html',    label: 'About' },
-  ];
+  
 
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   const isHomePage = currentPage === 'index.html' || currentPage === '';

@@ -1,43 +1,77 @@
-const Circle = document.querySelector(".Circle");
-const treeVideo = document.querySelector(".Tree-Video");
-const stage = document.querySelector(".Animation-Stage");
+document.addEventListener("DOMContentLoaded", () => {
+    const svgIcon = document.querySelector(".Svg-Icon");
+    const path = svgIcon.querySelector("path");
+    const treeVideo = document.querySelector(".Tree-Video");
+    const welcome = document.querySelector(".Welcome");
 
-
-// Figure out the center of the stage, so the ball lands dead-center
-// where the video will appear
-const stageWidth = stage.offsetWidth;
-const stageHeight = stage.offsetHeight;
-const circleSize = 50; // matches .Circle width/height in CSS
-
-const targetX = (stageWidth / 200) - (circleSize / 200);
-const targetY = (stageHeight / 200) - (circleSize / 200);
-
-// Starting state: off-screen to the left, invisible
-gsap.set(Circle, { x: -300, y: targetY, opacity: 0 });
-
-// Animate the ball in, landing at the center of the stage with an elastic settle
-gsap.to(Circle, {
-    x: targetX,
-    opacity: 1,
-    duration: 1.5,
-    ease: "elastic.out(1, 0.5)",
-    onComplete: () => {
-        // Ball disappears...
-        gsap.to(Circle, {
-            opacity: 0,
-            duration: 0.3,
-            onComplete: () => {
-                // ...then the video fades in and starts playing
-                treeVideo.classList.add("playing");
-                treeVideo.play();
+    // --- Split "Welcome" into individual letter spans -----------------
+    function splitLetters(el) {
+        const text = el.textContent;
+        el.textContent = "";
+        return [...text].map((char) => {
+            const span = document.createElement("span");
+            span.className = "letter";
+            if (char === " ") {
+                span.classList.add("is-space");
+                span.innerHTML = "&nbsp;";
+            } else {
+                span.textContent = char;
             }
+            el.appendChild(span);
+            return span;
         });
     }
 
- 
-});
+    const letters = splitLetters(welcome);
 
-const Welcome = document.querySelector(".Welcome");
-gsap.FromTo(Welcome,{
-    
-})
+    // --- Prep the SVG path for a "hand-drawn" line animation ----------
+    const pathLength = path.getTotalLength();
+    gsap.set(path, {
+        strokeDasharray: pathLength,
+        strokeDashoffset: pathLength
+    });
+
+    // Starting states — SVG stays fixed at the edge (see CSS), it never moves.
+    // Only its opacity and the stroke itself are animated.
+    gsap.set(svgIcon, { opacity: 1 });
+    gsap.set(letters, { opacity: 0, y: 20 });
+    gsap.set(treeVideo, { opacity: 0 });
+
+    const tl = gsap.timeline();
+
+    // 1. The line draws itself in place at the screen's edge
+    tl.to(path, {
+        strokeDashoffset: 0,
+        duration: 1.4,
+        
+        ease: "power1.inOut"
+    })
+
+    // 2. Once fully drawn, the line dissolves...
+    .to(svgIcon, {
+        opacity: 0,
+        duration: 0.5,
+        ease: "power1.out"
+    })
+
+    // 3. ...a 0.5s pause/beat between the line finishing and the next part starting...
+    .add(() => {
+        treeVideo.classList.add("playing");
+        treeVideo.play();
+    }, "+=0.0")
+
+    // 4. ...then "Welcome" reveals letter by letter in the center
+    .to(letters, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power2.out"
+    }, "<")
+
+    // 5. The tree fades in simultaneously with the letters
+    .to(treeVideo, {
+        opacity: 1,
+        duration: 1.2
+    }, "<");
+});

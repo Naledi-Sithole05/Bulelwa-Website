@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
-
 * {
   margin: 0;
   padding: 0;
@@ -9,16 +7,16 @@
 }
 
 body {
- background-color: #eff0c7;
+  background-color: #eff0c7;
   padding: 0.8rem;
 }
 
 header {
   margin: 0 -0.8rem;   /* pulls it back out past body's padding on both sides */
-  margin-top: -1rem; /* pulls it back out past body's padding on top */
-   position: sticky;
-   top: 0;
-   z-index: 100;
+  margin-top: -0.8rem; /* pulls it back out past body's padding on top */
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .Navigation {
@@ -45,65 +43,90 @@ header {
   display: inline-block; /* transforms need this to work reliably */
 }
 
-.Welcome-Page{
-   margin: 0.9rem 0;
-  padding: 1rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 2rem;
+/* ===== WELCOME / HERO SECTION ===== */
+
+.Welcome-Page {
+  margin: 0.9rem -0.8rem 0.9rem -0.8rem; /* pulls back out to true full width */
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
   overflow: hidden;
   background-color: #ffffe7;
   display: flex;
   align-items: center;
-
-}
-.Welcome{
-   font-family: "Jost", sans-serif;
-  font-size: 10rem;
-  color: #36330e;
-  text-align: center;
-  margin-top: 2rem;
-  margin-left:25rem;
-
-
-}
-.Animation-Stage {
+  justify-content: center;
   position: relative;
-  width: 700px;
-  height: 700px;
-  
-  margin: 0 auto;
 }
 
-.Circle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50px;
-  height: 50px;
-  background-color: #1c7f3a;
-  border-radius: 50%;
-  opacity: 0;
+.Welcome-Content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.Tree-Video {
+.Welcome {
+  font-family: "Jost", sans-serif;
+  font-size: 10rem;
+  margin-bottom: 15rem;
+  color: #1a400d;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.Welcome .letter {
+  display: inline-block;
+  opacity: 0; /* each letter is revealed individually via GSAP */
+}
+
+/* preserves spacing for the space character between words, if any */
+.Welcome .letter.is-space {
+  width: 0.35em;
+}
+
+.Animation-Stage {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none; /* nothing inside the stage is ever interactable/hoverable */
+}
+
+.Svg-Icon {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  width: 1100px;
+  height: 1000px;
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.Tree-Video {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 55%;
+  max-width: 900px;
+  transform: translate(-50%, -30%);
   object-fit: contain;
   opacity: 0;
+  pointer-events: none; /* prevents hover controls / PiP button from ever appearing */
   transition: opacity 0.4s ease;
-  margin-top:6rem;
-  margin-left: 10rem;
 }
 
 .Tree-Video.playing {
   opacity: 1;
 }
 
-
+/* ===== LANDING PAGE SECTION ===== */
 
 .Landing-Page {
   margin: 0.9rem 0;
@@ -120,7 +143,7 @@ header {
 .Landing-Page > div {
   height: 100%;
   width: 62%;
-  margin-left: 2rem; 
+  margin-left: 2rem;
   padding: 1rem;
   box-sizing: border-box;
 }
@@ -134,7 +157,6 @@ header {
   border-radius: 1rem;
   display: block;
 
-  
   -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
   mask-image: linear-gradient(to right, black 50%, transparent 100%);
 }
@@ -147,35 +169,37 @@ header {
   margin-top: 20rem;
 }
 
-.Section-2{
-   margin: 0.9rem 0;
+/* ===== SECTION 2 / HER REASON ===== */
+
+.Section-2 {
+  margin: 0.9rem 0;
   padding: 1rem;
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 2rem;
   overflow: hidden;
- background-color: #ffffe7;
+  background-color: #ffffe7;
   display: flex;
   align-items: center;
-
 }
+
 .Section-2 > div {
   height: 100%;
   width: 62%;
-  margin-left: 2rem; 
+  margin-left: 2rem;
   padding: 1rem;
   box-sizing: border-box;
 }
 
-.Her-Reason{
+.Her-Reason {
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
   color: #36330e;
   text-align: center;
   margin-top: 10rem;
-
 }
-.Her-Reason-H1{
+
+.Her-Reason-H1 {
   font-family: "Jost", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
@@ -184,7 +208,8 @@ header {
   margin: 0;
   padding: 1rem;
 }
-.Her-Reason-Image{
+
+.Her-Reason-Image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -193,30 +218,33 @@ header {
   border-radius: 1rem;
   display: block;
 
-  
   -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
   mask-image: linear-gradient(to right, black 50%, transparent 100%);
 }
-.About-Section1{
-   margin: 0.9rem 0;
+
+/* ===== ABOUT SECTION ===== */
+
+.About-Section1 {
+  margin: 0.9rem 0;
   padding: 1rem;
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 2rem;
   overflow: hidden;
- background-color: #ffffe7;
+  background-color: #ffffe7;
   display: flex;
   align-items: center;
-
 }
+
 .About-Section1 > div {
   height: 100%;
   width: 62%;
-  margin-left: 2rem; 
+  margin-left: 2rem;
   padding: 1rem;
   box-sizing: border-box;
 }
-.About-Section1-img{
+
+.About-Section1-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -225,30 +253,33 @@ header {
   border-radius: 1rem;
   display: block;
 
-  
   -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
   mask-image: linear-gradient(to right, black 50%, transparent 100%);
 }
+
 .About-H1 {
   font-family: "Jost", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
-  font-style: italic;      /* NEW: this is what actually makes it italic */
+  font-style: italic;
   color: #36330e;
   text-align: center;
   margin: 0;
   padding: 1rem;
 }
-.About-Mashezi{
+
+.About-Mashezi {
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
   color: #36330e;
   text-align: center;
   margin-top: 10rem;
   margin-bottom: -10rem;
-
 }
-.KeynoteSpeaker-Section{
+
+/* ===== KEYNOTE SPEAKER SECTION ===== */
+
+.KeynoteSpeaker-Section {
   margin: 0.9rem 0;
   padding: 1rem;
   width: 100%;
@@ -258,16 +289,17 @@ header {
   background-color: #ffffe7;
   display: flex;
   align-items: center;
-
 }
+
 .KeynoteSpeaker-Section > div {
   height: 100%;
   width: 62%;
-  margin-left: 2rem; 
+  margin-left: 2rem;
   padding: 1rem;
   box-sizing: border-box;
 }
-.KeynoteSpeaker-Image{
+
+.KeynoteSpeaker-Image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -276,11 +308,11 @@ header {
   border-radius: 1rem;
   display: block;
 
-  
   -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
   mask-image: linear-gradient(to right, black 90%, transparent 100%);
 }
-.keynoteSpeaker-h1{
+
+.keynoteSpeaker-h1 {
   font-family: "Jost", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
@@ -289,57 +321,18 @@ header {
   margin: 0;
   padding: 1rem;
 }
-.Keynote-Speaker-p{
+
+.Keynote-Speaker-p {
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
   color: #36330e;
   text-align: center;
   margin-top: 10rem;
+}
 
-}
-.Shepard-Teacher{
-  margin: 0.9rem 0;
-  padding: 1rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 2rem;
-  overflow: hidden;
-  background-color: #ffffe7;
-  display: flex;
-  align-items: center;
+/* ===== SHEPARD TEACHER SECTION ===== */
 
-}
-.Shepard-Teacher-Image{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  opacity: 0.8;
-  border-radius: 1rem;
-  display: block;
-
-  
-  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, black 90%, transparent 100%);
-}
-.Shepard-Teacher-h1{
-  font-family: "Jost", sans-serif;
-  font-size: 3rem;
-  text-transform: uppercase;
-  color: #36330e;
-  text-align: center;
-  margin: 0;
-  padding: 1rem;
-}
-.Shepard-Teacher-p{
-  font-family: "Jost", sans-serif;
-  font-size: 1.5rem;
-  color: #36330e;
-  text-align: center;
-  margin-top: 10rem;
-
-}
-.Lessons-Lectures{
+.Shepard-Teacher {
   margin: 0.9rem 0;
   padding: 1rem;
   width: 100%;
@@ -350,24 +343,72 @@ header {
   display: flex;
   align-items: center;
 }
+
+.Shepard-Teacher-Image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  opacity: 0.8;
+  border-radius: 1rem;
+  display: block;
+
+  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, black 90%, transparent 100%);
+}
+
+.Shepard-Teacher-h1 {
+  font-family: "Jost", sans-serif;
+  font-size: 3rem;
+  text-transform: uppercase;
+  color: #36330e;
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+}
+
+.Shepard-Teacher-p {
+  font-family: "Jost", sans-serif;
+  font-size: 1.5rem;
+  color: #36330e;
+  text-align: center;
+  margin-top: 10rem;
+}
+
+/* ===== LESSONS / LECTURES SECTION ===== */
+
+.Lessons-Lectures {
+  margin: 0.9rem 0;
+  padding: 1rem;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 2rem;
+  overflow: hidden;
+  background-color: #ffffe7;
+  display: flex;
+  align-items: center;
+}
+
 .Lessons-Lectures-h1 {
   font-family: "Jost", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
-  font-style: italic;      /* NEW: this is what actually makes it italic */
+  font-style: italic;
   color: #36330e;
   text-align: center;
   margin: 0;
   padding: 1rem;
 }
+
 .Lessons-Lectures-p {
   font-family: "Jost", sans-serif;
   font-size: 1.5rem;
- color: #36330e;
+  color: #36330e;
   text-align: center;
   margin-top: 10rem;
 }
-.Lessons-Lectures-Image{
+
+.Lessons-Lectures-Image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -376,7 +417,6 @@ header {
   border-radius: 1rem;
   display: block;
 
-  
   -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
   mask-image: linear-gradient(to right, black 90%, transparent 100%);
 }

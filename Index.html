@@ -12,16 +12,33 @@
 <body class="Landing-Page-Body">
     <header>
         <section class="Navigation">
-
         </section>
     </header>
+
     <section class="Welcome-Page">
-        <div>
+        <div class="Welcome-Content">
             <h1 class="Welcome">Welcome</h1>
 
             <div class="Animation-Stage">
-                <div class="Circle"></div>
-                <video class="Tree-Video" src="/IMGS/tree-transparent.webm" muted playsinline></video>
+                <svg class="Svg-Icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+                    <path d="M-0.7168622612953186,269.1756286621094C3.464738716681798,262.3058547973633,16.756256014108658,228.25567118326822,24.372743606567383,227.9569854736328C31.989231199026108,227.6582997639974,34.976089795430504,279.18160247802734,44.98206329345703,267.3835144042969C54.98803679148356,255.5854263305664,73.35721079508464,158.36319986979166,84.40858459472656,157.16845703125C95.45995839436848,155.97371419270834,90.3823013305664,273.0585467020671,111.2903060913086,260.2150573730469C132.19831085205078,247.3715680440267,182.5268643697103,75.32854970296223,209.8566131591797,80.1075210571289C237.18636194864908,84.88649241129558,260.7825393676758,265.7407366434733,275.268798828125,288.8888854980469C289.7550582885742,312.0370343526204,284.6773935953776,225.11947377522787,296.774169921875,218.9964141845703C308.8709462483724,212.87335459391275,332.6164805094401,257.37753041585285,347.8494567871094,252.15052795410156C363.0824330647786,246.92352549235025,381.45159912109375,198.387087504069,388.1720275878906,187.6343994140625" fill="none" stroke-width="25" stroke="url('#SvgjsLinearGradient1000')" stroke-linecap="round"></path>
+                    <defs>
+                        <linearGradient id="SvgjsLinearGradient1000">
+                            <stop stop-color="hsl(28, 54%, 35%)" offset="0"></stop>
+                            <stop stop-color="hsl(105, 75%, 26%)" offset="1"></stop>
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <video
+                    class="Tree-Video"
+                    src="/IMGS/tree-transparent.webm"
+                    muted
+                    playsinline
+                    disablepictureinpicture
+                    disableremoteplayback
+                    controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
+                </video>
             </div>
         </div>
     </section>
