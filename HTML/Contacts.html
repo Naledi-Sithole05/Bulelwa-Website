@@ -32,6 +32,9 @@
         </p>
 
         <form class="Booking-Form" id="bookingForm">
+            <!-- honeypot — invisible to real visitors -->
+            <input type="text" name="honey" style="display:none" tabindex="-1" autocomplete="off">
+
             <div class="Form-Grid">
                 <div class="Form-Field">
                     <label for="name">Full Name</label>
@@ -52,10 +55,10 @@
                     <label for="type">Booking Type</label>
                     <select id="type" name="type" required>
                         <option value="">Select one</option>
-                        <option value="lecture">Lecture</option>
-                        <option value="workshop">Workshop</option>
-                        <option value="retreat">Retreat</option>
-                        <option value="other">Other</option>
+                        <option value="Lecture">Lecture</option>
+                        <option value="Workshop">Workshop</option>
+                        <option value="Retreat">Retreat</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
             </div>
@@ -86,22 +89,50 @@
     </section>
 
     <script>
-        // Prefill category from Services page link (?type=lecture etc.)
+        // ---- Prefill category from Services page link (?type=lecture etc.) ----
         const params = new URLSearchParams(window.location.search);
         const typeParam = params.get('type');
         if (typeParam) {
             const select = document.getElementById('type');
-            if (select) select.value = typeParam;
+            if (select) {
+                const match = [...select.options].find(
+                    opt => opt.value.toLowerCase() === typeParam.toLowerCase()
+                );
+                if (match) select.value = match.value;
+            }
         }
 
-        // Placeholder submit handling — no backend wired up yet.
-        // Swap this for a real service (e.g. Formspree, EmailJS, or your own endpoint).
+        // ---- Submit to your own serverless endpoint ----
+        const ENDPOINT = 'https://YOUR-VERCEL-PROJECT.vercel.app/api/booking';
+
         const form = document.getElementById('bookingForm');
         const confirmation = document.getElementById('bookingConfirmation');
-        form.addEventListener('submit', (e) => {
+        const submitBtn = form.querySelector('.Booking-Submit');
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            form.style.display = 'none';
-            confirmation.style.display = 'block';
+
+            const payload = Object.fromEntries(new FormData(form).entries());
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) throw new Error('Request failed');
+
+                form.style.display = 'none';
+                confirmation.style.display = 'block';
+            } catch (err) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Request Booking';
+                alert('Something went wrong sending your request. Please try again, or email directly.');
+            }
         });
     </script>
 </body>
