@@ -6,21 +6,103 @@
     <title>Contacts</title>
     <link rel="stylesheet" href="/CSS/main.css">
     <script src="/JAVA/navigation.js" defer></script>
-     <script src="/JAVA/animation.js" defer></script>
+    <script src="/JAVA/animation.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" defer></script>
-    
 </head>
 <body>
-      <header>
-        <section class="Navigation">
-
-        </section>
+    <header>
+        <section class="Navigation"></section>
     </header>
+
     <section class="Contacts-Section">
         <div>
             <img class="Contacts-Image" src="/IMGS/single tree.JPG" alt="Contacts">
         </div>
+        <div class="Contacts-Overlay">
+            <h1 class="Contacts-Overlay-H1">Book a Session</h1>
+            <p class="Contacts-Overlay-P">Every talk starts with a conversation.</p>
+        </div>
     </section>
-    
+
+    <section class="Booking-Panel">
+        <h1>Request a Booking</h1>
+        <p class="Booking-Intro">
+            Fill in the details below and Bulelwa's team will follow up to
+            confirm dates and logistics.
+        </p>
+
+        <form class="Booking-Form" id="bookingForm">
+            <div class="Form-Grid">
+                <div class="Form-Field">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="Form-Field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+
+            <div class="Form-Grid">
+                <div class="Form-Field">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="Form-Field">
+                    <label for="type">Booking Type</label>
+                    <select id="type" name="type" required>
+                        <option value="">Select one</option>
+                        <option value="lecture">Lecture</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="retreat">Retreat</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="Form-Grid">
+                <div class="Form-Field">
+                    <label for="date">Preferred Date</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div class="Form-Field">
+                    <label for="organization">Organization / Location</label>
+                    <input type="text" id="organization" name="organization">
+                </div>
+            </div>
+
+            <div class="Form-Field">
+                <label for="message">Tell us about the event</label>
+                <textarea id="message" name="message" placeholder="Audience, group size, goals for the session..."></textarea>
+            </div>
+
+            <button type="submit" class="Btn Booking-Submit">Request Booking</button>
+        </form>
+
+        <div class="Booking-Confirmation" id="bookingConfirmation">
+            <h2>Thank you</h2>
+            <p>Your request has been received. Bulelwa's team will be in touch shortly.</p>
+        </div>
+    </section>
+
+    <script>
+        // Prefill category from Services page link (?type=lecture etc.)
+        const params = new URLSearchParams(window.location.search);
+        const typeParam = params.get('type');
+        if (typeParam) {
+            const select = document.getElementById('type');
+            if (select) select.value = typeParam;
+        }
+
+        // Placeholder submit handling — no backend wired up yet.
+        // Swap this for a real service (e.g. Formspree, EmailJS, or your own endpoint).
+        const form = document.getElementById('bookingForm');
+        const confirmation = document.getElementById('bookingConfirmation');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.style.display = 'none';
+            confirmation.style.display = 'block';
+        });
+    </script>
 </body>
 </html>

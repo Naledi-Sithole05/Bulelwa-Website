@@ -1,4 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap');
+
+/* ============================================================
+   DESIGN TOKENS
+   Palette pulled from your existing hero-line gradient
+   (hsl(28,54%,35%) -> ochre, hsl(105,75%,26%) -> moss) so the
+   accent colors are literally sourced from the site's own mark,
+   not a generic default.
+   ============================================================ */
+:root {
+  --forest-deep: #0f2412;   /* nav / darkest ground */
+  --forest: #1a400d;        /* hero headline green */
+  --cream: #eff0c7;         /* page background */
+  --ivory: #ffffe7;         /* card / panel surface */
+  --ink: #36330e;           /* body text on light surfaces */
+  --ochre: #8a5429;         /* accent 1 — from hero line gradient */
+  --moss: #1d6b1a;          /* accent 2 — from hero line gradient */
+  --ink-soft: rgba(54, 51, 14, 0.62);
+
+  --font-display: "Fraunces", serif;   /* statements, quotes, big type */
+  --font-ui: "Jost", sans-serif;       /* nav, labels, body, captions */
+
+  --section-radius: 2rem;
+  --edge: 0.8rem; /* body padding, referenced by full-bleed pull-outs */
+}
 
 * {
   margin: 0;
@@ -6,19 +30,39 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
 body {
-  background-color: #eff0c7;
-  padding: 0.8rem;
+  background-color: var(--cream);
+  padding: var(--edge);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ochre);
+  outline-offset: 3px;
 }
 
 header {
-  margin: 0 -0.8rem;   /* pulls it back out past body's padding on both sides */
-  margin-top: -0.8rem; /* pulls it back out past body's padding on top */
+  margin: 0 calc(var(--edge) * -1);
+  margin-top: calc(var(--edge) * -1);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 .Navigation {
   position: sticky;
   top: 0;
@@ -31,28 +75,86 @@ header {
   gap: 1.5rem;
   justify-content: center;
   padding: 1rem;
-  background-color: #153019;
-  perspective: 800px; /* enables 3D depth for children */
+  background-color: var(--forest-deep);
+  perspective: 800px;
 }
 
 .Navigation .nav-links a {
   text-decoration: none;
   color: #efeab6;
-  font-family: "Jost", sans-serif;
-  font-weight: bold;
-  display: inline-block; /* transforms need this to work reliably */
+  font-family: var(--font-ui);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  display: inline-block;
+  position: relative;
 }
 
-/* ===== WELCOME / HERO SECTION ===== */
+.Navigation .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.35rem;
+  width: 100%;
+  height: 1px;
+  background: var(--ochre);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
 
+.Navigation .nav-links a:hover::after,
+.Navigation .nav-links a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   SIGNATURE ELEMENT — THE LIGHT-LINE
+   The hand-drawn line from the hero doesn't vanish after the
+   intro. It reappears fixed to the left edge of the viewport and
+   its stroke-dashoffset is tied to scroll progress in animation.js
+   — "the transfer of light from one generation to the next,"
+   literalized as a line that grows the whole way down the page.
+   ============================================================ */
+.Light-Line-Wrap {
+  position: fixed;
+  top: 0;
+  left: 0.6rem;
+  height: 100vh;
+  width: 6px;
+  z-index: 90;
+  pointer-events: none;
+}
+
+.Light-Line-Wrap svg {
+  height: 100%;
+  width: 100%;
+  overflow: visible;
+}
+
+.Light-Line-Wrap path {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke: url('#LightLineGradient');
+}
+
+@media (max-width: 900px) {
+  .Light-Line-Wrap { display: none; } /* keep mobile margins clean */
+}
+
+/* ============================================================
+   HERO / WELCOME
+   ============================================================ */
 .Welcome-Page {
-  margin: 0.9rem -0.8rem 0.9rem -0.8rem; /* pulls back out to true full width */
+  margin: 0.9rem calc(var(--edge) * -1);
   padding: 0;
   width: 100vw;
   height: 100vh;
   border-radius: 0;
   overflow: hidden;
-  background-color: #ffffe7;
+  background-color: var(--ivory);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,10 +172,12 @@ header {
 }
 
 .Welcome {
-  font-family: "Jost", sans-serif;
-  font-size: 10rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-optical-sizing: auto;
+  font-size: clamp(4rem, 12vw, 10rem);
   margin-bottom: 15rem;
-  color: #1a400d;
+  color: var(--forest);
   text-align: center;
   position: relative;
   z-index: 2;
@@ -81,12 +185,36 @@ header {
 
 .Welcome .letter {
   display: inline-block;
-  opacity: 0; /* each letter is revealed individually via GSAP */
+  opacity: 0;
 }
 
-/* preserves spacing for the space character between words, if any */
 .Welcome .letter.is-space {
   width: 0.35em;
+}
+
+.Scroll-Cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0;
+  z-index: 2;
+}
+
+.Scroll-Cue .Scroll-Cue-Line {
+  width: 1px;
+  height: 2.5rem;
+  background: var(--ochre);
+  transform-origin: top;
 }
 
 .Animation-Stage {
@@ -95,7 +223,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* nothing inside the stage is ever interactable/hoverable */
+  pointer-events: none;
 }
 
 .Svg-Icon {
@@ -118,7 +246,7 @@ header {
   transform: translate(-50%, -30%);
   object-fit: contain;
   opacity: 0;
-  pointer-events: none; /* prevents hover controls / PiP button from ever appearing */
+  pointer-events: none;
   transition: opacity 0.4s ease;
 }
 
@@ -126,26 +254,86 @@ header {
   opacity: 1;
 }
 
-/* ===== LANDING PAGE SECTION ===== */
-
-.Landing-Page {
-  margin: 0.9rem 0;
-  padding: 1rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 2rem;
+/* ============================================================
+   BASE PANEL — shared surface only (radius/bg), NOT layout.
+   Each section below defines its own shape so nothing repeats.
+   ============================================================ */
+.Panel {
+  background-color: var(--ivory);
+  border-radius: var(--section-radius);
   overflow: hidden;
-  background-color: #ffffe7;
-  display: flex;
-  align-items: center;
+  position: relative;
 }
 
-.Landing-Page > div {
-  height: 100%;
-  width: 62%;
-  margin-left: 2rem;
-  padding: 1rem;
-  box-sizing: border-box;
+/* ============================================================
+   BUTTON — shared pill CTA used across Home, Services, Contacts.
+   Built from the same tokens as the rest of the site: forest-deep
+   base (matches nav bg), ochre hover (matches nav underline +
+   accent color), Jost uppercase label to match nav-link styling.
+   ============================================================ */
+.Btn {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.9rem 2.2rem;
+  border-radius: 999px;
+  background: var(--forest-deep);
+  color: var(--cream);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Btn:hover,
+.Btn:focus-visible {
+  background: var(--ochre);
+  color: var(--cream);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -15px rgba(54, 51, 14, 0.4);
+}
+
+.Btn:active {
+  transform: translateY(0);
+}
+
+/* Secondary / outline variant — for a lower-emphasis CTA sitting
+   next to a primary .Btn (e.g. "Learn More" beside "Book Now") */
+.Btn-Outline {
+  background: transparent;
+  color: var(--forest);
+  box-shadow: inset 0 0 0 1.5px var(--forest);
+}
+
+.Btn-Outline:hover,
+.Btn-Outline:focus-visible {
+  background: var(--forest);
+  color: var(--cream);
+  box-shadow: inset 0 0 0 1.5px var(--forest);
+}
+
+/* ============================================================
+   INTRO / LANDING — asymmetric bleed image + floating quote card
+   (was: identical 62/38 flex split — now the image bleeds off the
+   top edge and the quote is an offset card that parallaxes over it)
+   ============================================================ */
+.Landing-Page {
+  margin: 3rem 0 4rem;
+  position: relative;
+  min-height: 90vh;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: stretch;
+  gap: 0;
+}
+
+.Landing-Page-Image-Wrap {
+  border-radius: var(--section-radius);
+  overflow: hidden;
+  position: relative;
 }
 
 .Landing-Page-Image {
@@ -153,95 +341,118 @@ header {
   height: 100%;
   object-fit: cover;
   object-position: top;
-  opacity: 0.8;
-  border-radius: 1rem;
   display: block;
+  will-change: transform;
+}
 
-  -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
-  mask-image: linear-gradient(to right, black 50%, transparent 100%);
+.Landing-Quote-Card {
+  background: var(--forest-deep);
+  color: var(--cream);
+  border-radius: var(--section-radius);
+  padding: 3rem 2.5rem;
+  position: relative;
+  margin: 3rem 0 3rem -3rem;
+  align-self: center;
+  box-shadow: 0 30px 60px -20px rgba(15, 36, 18, 0.45);
+  z-index: 3;
 }
 
 .Home-Quote {
-  font-family: "Jost", sans-serif;
-  font-size: 1.5rem;
-  color: #36330e;
-  text-align: center;
-  margin-top: 20rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.4;
 }
 
-/* ===== SECTION 2 / HER REASON ===== */
+.Home-Quote-Attribution {
+  display: block;
+  margin-top: 1.25rem;
+  font-family: var(--font-ui);
+  font-style: normal;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ochre);
+}
 
+@media (max-width: 900px) {
+  .Landing-Page {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .Landing-Quote-Card {
+    margin: -3rem 1rem 1rem;
+  }
+}
+
+/* ============================================================
+   "HER REASON" — pinned, one line reveals at a time on scroll.
+   This is a manifesto, so it's built to be read the way it's
+   meant to be heard: one statement at a time, not a paragraph
+   sitting in a box like every other section.
+   ============================================================ */
 .Section-2 {
   margin: 0.9rem 0;
-  padding: 1rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 2rem;
+  min-height: 100vh;
+  background-color: var(--forest-deep);
+  border-radius: var(--section-radius);
   overflow: hidden;
-  background-color: #ffffe7;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 4rem 2rem;
 }
 
-.Section-2 > div {
-  height: 100%;
-  width: 62%;
-  margin-left: 2rem;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.Her-Reason {
-  font-family: "Jost", sans-serif;
-  font-size: 1.5rem;
-  color: #36330e;
-  text-align: center;
-  margin-top: 10rem;
-}
-
-.Her-Reason-H1 {
-  font-family: "Jost", sans-serif;
-  font-size: 3rem;
+.Her-Reason-Eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #36330e;
+  color: var(--ochre);
+  margin-bottom: 2rem;
+}
+
+.Her-Reason-Lines {
+  max-width: 60rem;
   text-align: center;
-  margin: 0;
-  padding: 1rem;
 }
 
-.Her-Reason-Image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  opacity: 0.8;
-  border-radius: 1rem;
-  display: block;
-
-  -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
-  mask-image: linear-gradient(to right, black 50%, transparent 100%);
+.Her-Reason-Line {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4vw, 3.2rem);
+  line-height: 1.35;
+  color: var(--cream);
+  opacity: 0.12;
+  padding: 0.3rem 0;
 }
 
-/* ===== ABOUT SECTION ===== */
+.Her-Reason-Line.is-active {
+  opacity: 1;
+}
 
+/* ============================================================
+   ABOUT — offset circular portrait + scroll-counted stats.
+   Numbers here are real achievements, not decorative 01/02/03
+   markers, so a counter is doing informational work.
+   ============================================================ */
 .About-Section1 {
-  margin: 0.9rem 0;
-  padding: 1rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 2rem;
-  overflow: hidden;
-  background-color: #ffffe7;
-  display: flex;
+  margin: 4rem 0;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
   align-items: center;
+  gap: 3rem;
+  padding: 2rem 0;
 }
 
-.About-Section1 > div {
-  height: 100%;
-  width: 62%;
-  margin-left: 2rem;
-  padding: 1rem;
-  box-sizing: border-box;
+.About-Portrait-Wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 32rem;
+  justify-self: center;
 }
 
 .About-Section1-img {
@@ -249,174 +460,528 @@ header {
   height: 100%;
   object-fit: cover;
   object-position: top;
-  opacity: 0.8;
-  border-radius: 1rem;
+  border-radius: 50%;
   display: block;
+  border: 6px solid var(--ivory);
+  box-shadow: 0 25px 50px -20px rgba(54, 51, 14, 0.35);
+}
 
-  -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
-  mask-image: linear-gradient(to right, black 50%, transparent 100%);
+.About-Ring {
+  position: absolute;
+  inset: -1.4rem;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.About-Copy {
+  padding: 1rem 1rem 1rem 0;
 }
 
 .About-H1 {
-  font-family: "Jost", sans-serif;
-  font-size: 3rem;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-style: italic;
-  color: #36330e;
-  text-align: center;
-  margin: 0;
-  padding: 1rem;
+  color: var(--forest);
+  margin-bottom: 1.25rem;
 }
 
 .About-Mashezi {
-  font-family: "Jost", sans-serif;
-  font-size: 1.5rem;
-  color: #36330e;
-  text-align: center;
-  margin-top: 10rem;
-  margin-bottom: -10rem;
+  font-family: var(--font-ui);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--ink);
+  max-width: 40rem;
 }
 
-/* ===== KEYNOTE SPEAKER SECTION ===== */
+.About-Stats {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+}
 
+.Stat {
+  border-left: 2px solid var(--ochre);
+  padding-left: 1rem;
+}
+
+.Stat-Number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  color: var(--forest);
+  line-height: 1;
+}
+
+.Stat-Label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 900px) {
+  .About-Section1 { grid-template-columns: 1fr; }
+  .About-Stats { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+}
+
+/* ============================================================
+   KEYNOTE SPEAKER — horizontal scroll-snap topic gallery.
+   A list of talks is something you browse sideways through,
+   not a static box, so it gets its own interaction model.
+   ============================================================ */
 .KeynoteSpeaker-Section {
-  margin: 0.9rem 0;
-  padding: 1rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 2rem;
-  overflow: hidden;
-  background-color: #ffffe7;
-  display: flex;
-  align-items: center;
-}
-
-.KeynoteSpeaker-Section > div {
-  height: 100%;
-  width: 62%;
-  margin-left: 2rem;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.KeynoteSpeaker-Image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  opacity: 0.8;
-  border-radius: 1rem;
-  display: block;
-
-  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, black 90%, transparent 100%);
+  margin: 4rem 0;
+  padding: 3rem 0;
 }
 
 .keynoteSpeaker-h1 {
-  font-family: "Jost", sans-serif;
-  font-size: 3rem;
-  text-transform: uppercase;
-  color: #36330e;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--forest);
   text-align: center;
-  margin: 0;
-  padding: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .Keynote-Speaker-p {
-  font-family: "Jost", sans-serif;
-  font-size: 1.5rem;
-  color: #36330e;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--ink-soft);
   text-align: center;
-  margin-top: 10rem;
+  max-width: 34rem;
+  margin: 0 auto 2.5rem;
 }
 
-/* ===== SHEPARD TEACHER SECTION ===== */
+.Topic-Rail {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1rem calc(50vw - 15rem) 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ochre) transparent;
+}
 
+.Topic-Card {
+  flex: 0 0 auto;
+  width: 20rem;
+  scroll-snap-align: center;
+  background: var(--ivory);
+  border-radius: 1.5rem;
+  padding: 2.5rem 2rem;
+  border: 1px solid rgba(54, 51, 14, 0.08);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.Topic-Card:hover,
+.Topic-Card:focus-within {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 25px 45px -25px rgba(54, 51, 14, 0.4);
+}
+
+.Topic-Card-Num {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--ochre);
+  letter-spacing: 0.1em;
+}
+
+.Topic-Card-Title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--forest);
+  margin: 0.75rem 0 0.75rem;
+}
+
+.Topic-Card-Desc {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 900px) {
+  .Topic-Rail { padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* ============================================================
+   SHEPARD / TEACHER — full-bleed testimonial pull-quote
+   ============================================================ */
 .Shepard-Teacher {
-  margin: 0.9rem 0;
-  padding: 1rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 2rem;
-  overflow: hidden;
-  background-color: #ffffe7;
+  margin: 0.9rem calc(var(--edge) * -1);
+  padding: 6rem 2rem;
+  width: 100vw;
+  border-radius: 0;
+  background-color: var(--forest);
   display: flex;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .Shepard-Teacher-Image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top;
-  opacity: 0.8;
-  border-radius: 1rem;
-  display: block;
+  opacity: 0.18;
+  z-index: 0;
+}
 
-  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, black 90%, transparent 100%);
+.Shepard-Teacher-Content {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  text-align: center;
 }
 
 .Shepard-Teacher-h1 {
-  font-family: "Jost", sans-serif;
-  font-size: 3rem;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #36330e;
-  text-align: center;
-  margin: 0;
-  padding: 1rem;
+  color: var(--ochre);
+  margin-bottom: 1.5rem;
 }
 
 .Shepard-Teacher-p {
-  font-family: "Jost", sans-serif;
-  font-size: 1.5rem;
-  color: #36330e;
-  text-align: center;
-  margin-top: 10rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  line-height: 1.5;
+  color: var(--cream);
 }
 
-/* ===== LESSONS / LECTURES SECTION ===== */
-
+/* ============================================================
+   LESSONS / LECTURES — staggered hover-tilt card grid.
+   Cards are now links straight into the matching anchor on the
+   Services page, followed by a CTA into the full Services list.
+   ============================================================ */
 .Lessons-Lectures {
-  margin: 0.9rem 0;
-  padding: 1rem;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 2rem;
-  overflow: hidden;
-  background-color: #ffffe7;
-  display: flex;
-  align-items: center;
+  margin: 4rem 0 6rem;
+  padding: 3rem 0;
 }
 
 .Lessons-Lectures-h1 {
-  font-family: "Jost", sans-serif;
-  font-size: 3rem;
-  text-transform: uppercase;
+  font-family: var(--font-display);
   font-style: italic;
-  color: #36330e;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--forest);
   text-align: center;
-  margin: 0;
-  padding: 1rem;
 }
 
 .Lessons-Lectures-p {
-  font-family: "Jost", sans-serif;
-  font-size: 1.5rem;
-  color: #36330e;
+  font-family: var(--font-ui);
+  color: var(--ink-soft);
   text-align: center;
-  margin-top: 10rem;
+  max-width: 32rem;
+  margin: 0.75rem auto 3rem;
+}
+
+.Lessons-Grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.75rem;
+}
+
+.Lesson-Card {
+  display: block;
+  background: var(--ivory);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  will-change: transform;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.Lesson-Card:hover,
+.Lesson-Card:focus-visible {
+  box-shadow: 0 25px 45px -25px rgba(54, 51, 14, 0.4);
+  transform: translateY(-0.4rem);
 }
 
 .Lessons-Lectures-Image {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  object-position: top;
-  opacity: 0.8;
-  border-radius: 1rem;
   display: block;
+  opacity: 0.9;
+}
 
-  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, black 90%, transparent 100%);
+.Lesson-Card-Body {
+  padding: 1.5rem;
+}
+
+.Lesson-Card-Title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--forest);
+  margin-bottom: 0.4rem;
+}
+
+.Lesson-Card-Meta {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ochre);
+}
+
+.Lessons-CTA {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+/* ============================================================
+   SERVICES PAGE — expanded version of each Lesson-Card, alternating
+   image side left/right, anchored so home page cards land here.
+   ============================================================ */
+.Services-Hero {
+  text-align: center;
+  max-width: 40rem;
+  margin: 5rem auto 3rem;
+  padding: 0 1rem;
+}
+
+.Services-Hero-H1 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--forest);
+  margin-bottom: 1rem;
+}
+
+.Services-Hero-P {
+  font-family: var(--font-ui);
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.Service-Detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  background: var(--ivory);
+  border-radius: var(--section-radius);
+  margin: 2rem 0;
+  padding: 3rem;
+  scroll-margin-top: 6rem; /* keeps anchor jumps clear of the sticky nav */
+}
+
+.Service-Detail:nth-of-type(even) .Service-Detail-Image {
+  order: 2;
+}
+
+.Service-Detail-Image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  display: block;
+}
+
+.Service-Detail-Eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ochre);
+  margin-bottom: 0.75rem;
+}
+
+.Service-Detail-Title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  color: var(--forest);
+  margin-bottom: 1rem;
+}
+
+.Service-Detail-Desc {
+  font-family: var(--font-ui);
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+}
+
+@media (max-width: 900px) {
+  .Service-Detail {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+  .Service-Detail:nth-of-type(even) .Service-Detail-Image {
+    order: 0;
+  }
+}
+
+/* ============================================================
+   CONTACTS / BOOKING PAGE
+   ============================================================ */
+.Contacts-Section {
+  position: relative;
+  margin: 0.9rem 0;
+  border-radius: var(--section-radius);
+  overflow: hidden;
+  min-height: 60vh;
+}
+
+.Contacts-Image {
+  width: 100%;
+  height: 100%;
+  min-height: 60vh;
+  object-fit: cover;
+  display: block;
+}
+
+.Contacts-Overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(15, 36, 18, 0.35);
+  color: var(--cream);
+}
+
+.Contacts-Overlay-H1 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 0.75rem;
+}
+
+.Contacts-Overlay-P {
+  font-family: var(--font-ui);
+  letter-spacing: 0.05em;
+}
+
+.Booking-Panel {
+  background: var(--ivory);
+  border-radius: var(--section-radius);
+  padding: 3rem;
+  max-width: 46rem;
+  margin: 3rem auto 6rem;
+  box-shadow: 0 30px 60px -30px rgba(54, 51, 14, 0.25);
+}
+
+.Booking-Panel h1 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+}
+
+.Booking-Intro {
+  font-family: var(--font-ui);
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+}
+
+.Booking-Form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.Form-Grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.Form-Field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.Form-Field label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.Form-Field input,
+.Form-Field select,
+.Form-Field textarea {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(54, 51, 14, 0.15);
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.Form-Field textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.Form-Field input:focus,
+.Form-Field select:focus,
+.Form-Field textarea:focus {
+  outline: 2px solid var(--ochre);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+
+.Booking-Submit {
+  justify-self: start;
+  margin-top: 0.5rem;
+}
+
+.Booking-Confirmation {
+  display: none;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.Booking-Confirmation h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--forest);
+  margin-bottom: 0.75rem;
+}
+
+.Booking-Confirmation p {
+  font-family: var(--font-ui);
+  color: var(--ink-soft);
+}
+
+@media (max-width: 700px) {
+  .Booking-Panel {
+    padding: 2rem;
+  }
+  .Form-Grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer.Site-Footer {
+  margin: 2rem calc(var(--edge) * -1) calc(var(--edge) * -1);
+  padding: 3rem var(--edge) 2rem;
+  background: var(--forest-deep);
+  color: var(--cream);
+  text-align: center;
+}
+
+.Site-Footer p {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: rgba(239, 240, 199, 0.6);
 }

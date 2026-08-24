@@ -6,11 +6,8 @@
     { href: '../HTML/About.html',    label: 'About' },
   ];
 
-  
-
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  const isHomePage = currentPage === 'index.html' || currentPage === '';
-  const links = isHomePage ? homeNavLinks : navLinks;
+  const links = navLinks; // same nav everywhere
 
   function buildNav() {
     const nav = document.querySelector('.Navigation');
@@ -25,7 +22,6 @@
       a.href = link.href;
       a.textContent = link.label;
 
-      // Highlight whichever link matches the page currently open
       const linkPage = link.href.split('/').pop();
       if (linkPage === currentPage) {
         a.classList.add('active');
@@ -37,8 +33,6 @@
     });
 
     nav.appendChild(ul);
-
-    // Only attach hover effects once the links actually exist in the DOM
     attachNavHoverEffects();
   }
 
@@ -46,24 +40,24 @@
     const navLinkElements = document.querySelectorAll('.nav-links a');
 
     navLinkElements.forEach(link => {
-      link.style.transformOrigin = "center"; // makes sure it scales evenly, not lopsided
+      link.style.transformOrigin = "center";
 
-    link.addEventListener('mouseenter', () => {
-  gsap.to(link, {
-    scale: 1.2,
-    z: 50,
-    rotationX: 5,
-    
-    color: "#fffffc",
-    duration: 0.3,
-    ease: "power2.out"
-  });
-});
+      link.addEventListener('mouseenter', () => {
+        gsap.to(link, {
+          scale: 1.2,
+          z: 50,
+          rotationX: 5,
+          color: "#fffffc",
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+
       link.addEventListener('mouseleave', () => {
         gsap.to(link, {
           scale: 1,
           opacity: 1,
-          color: "#efeab6", // back to the original nav-link color from your CSS
+          color: "#efeab6",
           duration: 0.3,
           ease: "power2.out"
         });
@@ -73,6 +67,5 @@
 
   document.addEventListener('DOMContentLoaded', buildNav);
 })();
-
 
  

@@ -3,17 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bulelwa</title>
+    <title>Bulelwa Mashezi — Speaker &amp; Guide</title>
     <link rel="stylesheet" href="/CSS/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" defer></script>
     <script src="/JAVA/navigation.js" defer></script>
     <script src="/JAVA/animation.js" defer></script>
 </head>
 <body class="Landing-Page-Body">
     <header>
         <section class="Navigation">
+            <!-- nav-links markup unchanged — controlled by navigation.js -->
         </section>
     </header>
+
+    <!-- SIGNATURE ELEMENT: the light-line, fixed to the viewport, grows
+         with scroll progress across the whole page. See animation.js -->
+    <div class="Light-Line-Wrap" aria-hidden="true">
+        <svg viewBox="0 0 20 1000" preserveAspectRatio="none">
+            <path class="Light-Line-Path" d="M10,0 L10,1000"></path>
+            <defs>
+                <linearGradient id="LightLineGradient" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                    <stop stop-color="hsl(28, 54%, 35%)" offset="0"></stop>
+                    <stop stop-color="hsl(105, 75%, 26%)" offset="1"></stop>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
 
     <section class="Welcome-Page">
         <div class="Welcome-Content">
@@ -40,33 +56,155 @@
                     controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
                 </video>
             </div>
+
+            <div class="Scroll-Cue">
+                <span class="Scroll-Cue-Line"></span>
+                Scroll
+            </div>
         </div>
     </section>
 
+    <!-- INTRO: asymmetric bleed image + floating, parallaxing quote card -->
     <section class="Landing-Page">
-        <div>
-         <img class="Landing-Page-Image" src="/IMGS/Jul 14, 2026, 11_47_11 AM.png" alt="Bulelwa">
+        <div class="Landing-Page-Image-Wrap">
+            <img class="Landing-Page-Image" src="/IMGS/Jul 14, 2026, 11_47_11 AM.png" alt="Bulelwa Mashezi">
         </div>
 
-        <div>
-            <p class="Home-Quote">"Knowledge is the transfer of light from one generation to the next"<br>
-            -Bulelwa Mashezi</p>
-        </div>
-    </section>
-
-    <section class="Section-2">
-         <div>
-            <img src="/IMGS/Her Reason ..png" alt="Her Reason" class="Her-Reason-Image">
-        </div>
-        <div>
-            <h1 class="Her-Reason-H1">Her Reason</h1>
-            <p class="Her-Reason">
-                Speak, our voices are tools of creation to speak truth and create the new.<br>
-                Teach the youth that all is storaged within self to unlock potential.<br>
-                Reach out to the potential, the outcasts, misfits, the lost, and the broken. Be the light, not the saver.<br>
-                Heal thyself. It all starts with you. Forgiveness being the key, wisdom being the guide.
+        <div class="Landing-Quote-Card">
+            <p class="Home-Quote">
+                &ldquo;Knowledge is the transfer of light from one generation to the next.&rdquo;
+                <span class="Home-Quote-Attribution">Bulelwa Mashezi</span>
             </p>
         </div>
     </section>
+
+    <!-- HER REASON: pinned section, one statement revealed at a time on scroll -->
+    <section class="Section-2">
+        <p class="Her-Reason-Eyebrow">Her Reason</p>
+        <div class="Her-Reason-Lines">
+            <p class="Her-Reason-Line">Speak — our voices are tools of creation, to speak truth and create the new.</p>
+            <p class="Her-Reason-Line">Teach the youth that all is stored within self, to unlock potential.</p>
+            <p class="Her-Reason-Line">Reach the outcasts, the misfits, the lost, the broken. Be the light, not the saviour.</p>
+            <p class="Her-Reason-Line">Heal thyself. It all starts with you — forgiveness the key, wisdom the guide.</p>
+        </div>
+    </section>
+
+    <!-- ABOUT: offset circular portrait + scroll-counted stats.
+         NOTE: numbers below are placeholders — swap for Bulelwa's real figures. -->
+    <section class="About-Section1">
+        <div class="About-Portrait-Wrap">
+            <img class="About-Section1-img" src="/IMGS/Mashezi.JPG" alt="Bulelwa Mashezi portrait">
+            <svg class="About-Ring" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="48" fill="none" stroke="#8a5429" stroke-width="0.6" stroke-dasharray="2 4"></circle>
+            </svg>
+        </div>
+
+        <div class="About-Copy">
+            <h1 class="About-H1">Who She Is</h1>
+            <p class="About-Mashezi">
+                Bulelwa Mashezi speaks so people remember what they already carry.
+                Her work sits at the meeting point of storytelling, healing, and truth —
+                built on the belief that every person holds the light they're
+                looking for, and simply needs the room, and the reason, to find it.
+            </p>
+
+            <div class="About-Stats">
+                <div class="Stat">
+                    <span class="Stat-Number" data-count-to="12">0</span>
+                    <span class="Stat-Label">Years Speaking</span>
+                </div>
+                <div class="Stat">
+                    <span class="Stat-Number" data-count-to="80">0</span>
+                    <span class="Stat-Label">Stages &amp; Workshops</span>
+                </div>
+                <div class="Stat">
+                    <span class="Stat-Number" data-count-to="5000">0</span>
+                    <span class="Stat-Label">Lives Reached</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEYNOTE: horizontal scroll-snap gallery of speaking topics.
+         NOTE: topic copy below is placeholder — replace with her real talks. -->
+    <section class="KeynoteSpeaker-Section">
+        <h1 class="keynoteSpeaker-h1">Keynote Speaker</h1>
+        <p class="Keynote-Speaker-p">A few of the conversations Bulelwa brings to a room. Scroll to explore.</p>
+
+        <div class="Topic-Rail">
+            <article class="Topic-Card">
+                <span class="Topic-Card-Num">01</span>
+                <h3 class="Topic-Card-Title">The Voice as Creation</h3>
+                <p class="Topic-Card-Desc">On speaking truth as an act of building, not just telling — for leaders learning to use their voice with intention.</p>
+            </article>
+            <article class="Topic-Card">
+                <span class="Topic-Card-Num">02</span>
+                <h3 class="Topic-Card-Title">Teaching the Untaught</h3>
+                <p class="Topic-Card-Desc">For educators and mentors working with youth who've been written off — reaching potential that's been buried, not absent.</p>
+            </article>
+            <article class="Topic-Card">
+                <span class="Topic-Card-Num">03</span>
+                <h3 class="Topic-Card-Title">Be the Light, Not the Saviour</h3>
+                <p class="Topic-Card-Desc">A talk on sustainable service — how to show up for others without losing yourself in the process.</p>
+            </article>
+            <article class="Topic-Card">
+                <span class="Topic-Card-Num">04</span>
+                <h3 class="Topic-Card-Title">Forgiveness as Strategy</h3>
+                <p class="Topic-Card-Desc">On healing as the starting point for real leadership — why forgiveness is a discipline, not a feeling.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL: full-bleed pull-quote.
+         NOTE: replace with a real testimonial and credit. -->
+    <section class="Shepard-Teacher">
+        <img class="Shepard-Teacher-Image" src="/IMGS/Her Reason ..png" alt="" aria-hidden="true">
+        <div class="Shepard-Teacher-Content">
+            <p class="Shepard-Teacher-h1">In Her Own Words</p>
+            <p class="Shepard-Teacher-p">
+                Every room I stand in, I try to leave people a little more sure
+                of what they already know.
+            </p>
+        </div>
+    </section>
+
+   <!-- LESSONS: staggered hover-tilt card grid, now linking into
+     the expanded Service-Detail sections on Services.html -->
+<section class="Lessons-Lectures">
+    <h1 class="Lessons-Lectures-h1">Lessons &amp; Lectures</h1>
+    <p class="Lessons-Lectures-p">A growing library of talks, workshops, and teachings.</p>
+
+    <div class="Lessons-Grid">
+        <a class="Lesson-Card" href="/HTML/Services.html#workshop">
+            <img class="Lessons-Lectures-Image" src="/IMGS/Jul 14, 2026, 11_47_11 AM.png" alt="">
+            <div class="Lesson-Card-Body">
+                <p class="Lesson-Card-Meta">Workshop</p>
+                <h3 class="Lesson-Card-Title">Storage Within Self</h3>
+            </div>
+        </a>
+        <a class="Lesson-Card" href="/HTML/Services.html#lecture">
+            <img class="Lessons-Lectures-Image" src="/IMGS/Mashezi.JPG" alt="">
+            <div class="Lesson-Card-Body">
+                <p class="Lesson-Card-Meta">Lecture</p>
+                <h3 class="Lesson-Card-Title">Reaching the Lost</h3>
+            </div>
+        </a>
+        <a class="Lesson-Card" href="/HTML/Services.html#retreat">
+            <img class="Lessons-Lectures-Image" src="/IMGS/Her Reason ..png" alt="">
+            <div class="Lesson-Card-Body">
+                <p class="Lesson-Card-Meta">Retreat</p>
+                <h3 class="Lesson-Card-Title">Heal Thyself</h3>
+            </div>
+        </a>
+    </div>
+
+    <div class="Lessons-CTA">
+        <a class="Btn" href="/HTML/Services.html">View All Services</a>
+    </div>
+</section>
+
+    <footer class="Site-Footer">
+        <p>&copy; 2026 Bulelwa Mashezi. All rights reserved.</p>
+    </footer>
 </body>
 </html>
