@@ -1,9 +1,12 @@
 (function () {
+  const inHtmlFolder = window.location.pathname.includes('/HTML/');
+  const prefix = inHtmlFolder ? '../' : '';
+
   const navLinks = [
-    { href: '../index.html',         label: 'Home' },
-    { href: '../HTML/Services.html', label: 'Services' },
-    { href: '../HTML/Contacts.html', label: 'Contact' },
-    { href: '../HTML/About.html',    label: 'About' },
+    { href: prefix + 'index.html',         label: 'Home' },
+    { href: prefix + 'HTML/Services.html', label: 'Services' },
+    { href: prefix + 'HTML/Contacts.html', label: 'Contact' },
+    { href: prefix + 'HTML/About.html',    label: 'About' },
   ];
 
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -67,5 +70,4 @@
 
   document.addEventListener('DOMContentLoaded', buildNav);
 })();
-
  
